@@ -1,0 +1,33 @@
+---
+import Screen from './Screen.astro';
+import '../styles/monitor.css';
+
+import imageWallpaper from '../assets/images/wallpaper.jpg'
+---
+
+<div class="monitor">
+    <div class="monitor__top">
+        <slot name="top" />
+    </div>
+
+    <div class="monitor__middle">
+        <div class="monitor__left">
+            <slot name="left" />
+        </div>
+
+        <div class="monitor__content">
+            <Screen src={imageWallpaper} alt="Wallpaper", fit="cover", vignette={false}>
+                <slot />
+            </Screen>
+        </div>
+
+        <div class="monitor__right">
+            <slot name="right" />
+        </div>
+    </div>
+
+    <div class="monitor__bottom">
+        <slot name="bottom" />
+    </div>
+</div>
+

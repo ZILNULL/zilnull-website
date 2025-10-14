@@ -1,0 +1,19 @@
+---
+import {Image} from 'astro:assets';
+import '../styles/screen.css';
+
+const {
+  src,
+  alt = "",
+  fit = "cover"
+} = Astro.props;
+
+const fitClass = fit === "contain" ? "screen--contain" : "screen--cover";
+---
+
+<div class={`screen ${fitClass}`}>
+    <Image class="screen__wallpaper" src={src} alt={alt} />
+    <div class="screen__overlay">
+        <slot />
+    </div>
+</div>

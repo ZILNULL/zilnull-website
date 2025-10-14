@@ -1,0 +1,26 @@
+---
+import MonitorBorder from '../components/MonitorBorder.astro';
+import Window from '../components/Window.astro';
+
+import '../styles/global.css';
+
+const { pageTitle } = Astro.props;
+---
+
+<html lang="en">
+    <head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{pageTitle}</title>
+	</head>
+	<body>
+		<MonitorBorder>
+			<Window title="Blog Post" x={120} y={90} width={520} height={360}>
+				<h2 style="margin:0 0 8px 0;">woa</h2>
+				<p>This is static for now. no dragging, resizing, or closing yet.</p>
+			</Window>
+		</MonitorBorder>
+	</body>
+</html>

@@ -1,0 +1,62 @@
+.win {
+    position: absolute;
+    background: var(--window-bg);
+    color: var(--window-fg);
+    border: 1px solid var(--window-border);
+    border-radius: var(--window-radius);
+    box-shadow: var(--window-shadow);
+    overflow: hidden;
+    user-select: all;
+    pointer-events: all;
+}
+
+.win.win--maximized {
+  left: 0 !important;
+  top: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 0;
+}
+
+.win__titlebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--window-titlebar-h);
+    padding: 0 10px;
+    background: var(--window-titlebar-bg);
+    color: var(--window-titlebar-fg);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+}
+
+.win__title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.win__controls {
+  display: flex;
+  gap: 6px;
+}
+.win__btn {
+  appearance: none;
+  border: 1px solid rgba(255,255,255,.15);
+  background: rgba(0,0,0,.15);
+  color: #eaeaea;
+  width: 24px; height: 22px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.win__btn:hover { background: rgba(158, 23, 23, 0); }
+
+.win__content {
+  position: absolute;
+  top: var(--window-titlebar-h);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  padding: 10px;
+}

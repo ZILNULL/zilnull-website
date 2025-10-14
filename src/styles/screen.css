@@ -1,0 +1,29 @@
+.screen {
+    z-index: -2;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    overflow: hidden;
+}
+
+.screen__wallpaper {
+    z-index: -99;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-position: center;
+    user-select: none;
+    pointer-events: none;
+}
+
+.screen--cover  .screen__wallpaper { object-fit: cover; }
+.screen--contain .screen__wallpaper { object-fit: contain; background:#000; }
+
+.screen__overlay {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+}

@@ -1,0 +1,43 @@
+---
+import '../styles/window.css';
+
+const {
+    title = "Untitled",
+    x = 80,
+    y = 60,
+    width = 480,
+    height = 320,
+    showClose = true,
+    showMaximize = true,
+} = Astro.props;
+
+const id = `win-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<div
+  id={id}
+  class="win"
+  role="dialog"
+  aria-label={title}
+  aria-modal="false"
+  style={`left:${x}px; top:${y}px; width:${width}px; height:${height}px;`}
+>
+    <div class="win__titlebar">
+        <div class="win__title">{title}</div>
+        <div class="win__controls">
+        {showMaximize && (
+            <button class="win__btn" data-win-btn="maximize" aria-label="Maximize/Restore">▢</button>
+        )}
+        {showClose && (
+            <button class="win__btn" data-win-btn="close" aria-label="Close">✕</button>
+        )}
+        </div>
+    </div>
+
+    <div class="win__content">
+        <slot />
+    </div>
+</div>
+<script>
+    import '../scripts/window.js';
+</script>
