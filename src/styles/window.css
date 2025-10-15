@@ -1,21 +1,25 @@
 .win {
     position: absolute;
+    z-index: 2;
     background: var(--window-bg);
     color: var(--window-fg);
     border: 1px solid var(--window-border);
     border-radius: var(--window-radius);
     box-shadow: var(--window-shadow);
     overflow: hidden;
-    user-select: all;
-    pointer-events: all;
 }
+.win:focus { outline: none; }
 
 .win.win--maximized {
-  left: 0 !important;
-  top: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  border-radius: 0;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 0;
+}
+
+.win.win--minimized {
+    height: var(--window-titlebar-h) !important;
 }
 
 .win__titlebar {
@@ -31,32 +35,53 @@
 }
 
 .win__title {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .win__controls {
-  display: flex;
-  gap: 6px;
+    display: flex;
+    gap: 6px;
 }
 .win__btn {
-  appearance: none;
-  border: 1px solid rgba(255,255,255,.15);
-  background: rgba(0,0,0,.15);
-  color: #eaeaea;
-  width: 24px; height: 22px;
-  border-radius: 4px;
-  cursor: pointer;
+    appearance: none;
+    border: 1px solid rgba(255,255,255,.15);
+    background: rgba(0,0,0,.15);
+    color: #eaeaea;
+    width: 24px; height: 22px;
+    border-radius: 4px;
+    cursor: pointer;
 }
-.win__btn:hover { background: rgba(158, 23, 23, 0); }
+.win__btn:hover { background: rgba(255,255,255,.08); }
 
 .win__content {
-  position: absolute;
-  top: var(--window-titlebar-h);
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow: auto;
-  padding: 10px;
+    position: absolute;
+    top: var(--window-titlebar-h);
+    left: 0; right: 0; bottom: 0;
+    overflow: auto;
+    padding: 10px;
 }
+
+.win.win--minimized .win__content {
+    display: none;
+}
+
+/* ===== Moving handlers ===== */
+.win__handle { position: absolute; z-index: 3; }
+.win__handle--n, .win__handle--s { left: 4px; right: 4px; height: 8px; }
+.win__handle--n { top: -2px; cursor: ns-resize; }
+.win__handle--s { bottom: -2px; cursor: ns-resize; }
+
+.win__handle--e, .win__handle--w { top: 4px; bottom: 4px; width: 8px; }
+.win__handle--e { right: -2px; cursor: ew-resize; }
+.win__handle--w { left: -2px; cursor: ew-resize; }
+
+.win__handle--ne, .win__handle--nw, .win__handle--se, .win__handle--sw {
+  width: 12px; height: 12px;
+}
+.win__handle--ne { top: -2px; right: -2px; cursor: nesw-resize; }
+.win__handle--nw { top: -2px; left: -2px;  cursor: nwse-resize; }
+.win__handle--se { bottom: -2px; right: -2px; cursor: nwse-resize; }
+.win__handle--sw { bottom: -2px; left: -2px;  cursor: nesw-resize; }
+body.is-user-dragging { user-select: none; }

@@ -11,7 +11,7 @@
     --window-bg: var(--background-color, #fff);
     --window-fg: var(--text-color, #000);
     --window-border: var(--border-color, #292828);
-    --window-radius: 0px;         /* keep square for now (you can try 6px later) */
+    --window-radius: 3px;
     --window-titlebar-bg: var(--border-color, #292828);
     --window-titlebar-fg: #eaeaea;
     --window-shadow: 0 10px 30px rgba(0,0,0,.35);

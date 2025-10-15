@@ -17,10 +17,7 @@ const { pageTitle } = Astro.props;
 	</head>
 	<body>
 		<MonitorBorder>
-			<Window title="Blog Post" x={120} y={90} width={520} height={360}>
-				<h2 style="margin:0 0 8px 0;">woa</h2>
-				<p>This is static for now. no dragging, resizing, or closing yet.</p>
-			</Window>
+			<slot />
 		</MonitorBorder>
 	</body>
 </html>

@@ -1,43 +1,54 @@
 ---
 import '../styles/window.css';
-
 const {
+    id: providedId,
     title = "Untitled",
-    x = 80,
-    y = 60,
-    width = 480,
-    height = 320,
-    showClose = true,
-    showMaximize = true,
+    x = 80, y = 60, width = 480, height = 320,
+    movable = true, resizable = true,
+    showClose = true, showMaximize = true, showMinimize = true,
 } = Astro.props;
 
-const id = `win-${Math.random().toString(36).slice(2, 9)}`;
+const winId = providedId ?? `win-${Math.random().toString(36).slice(2, 9)}`;
 ---
 
-<div
-  id={id}
-  class="win"
-  role="dialog"
-  aria-label={title}
-  aria-modal="false"
-  style={`left:${x}px; top:${y}px; width:${width}px; height:${height}px;`}
+<div id={winId} class="win"
+    data-movable={movable ? "1" : "0"} data-resizable={resizable ? "1" : "0"}
+    role = "dialog" aria-label={title} aria-modal="false"
+    style={`left: ${x}px; top: ${y}px; width: ${width}px; height: ${height}px`}
 >
     <div class="win__titlebar">
         <div class="win__title">{title}</div>
         <div class="win__controls">
-        {showMaximize && (
-            <button class="win__btn" data-win-btn="maximize" aria-label="Maximize/Restore">▢</button>
-        )}
-        {showClose && (
-            <button class="win__btn" data-win-btn="close" aria-label="Close">✕</button>
-        )}
+            {showMinimize && (
+                <button class="win__btn" data-win-btn="minimize" aria-label="Minimize/Restore">—</button>
+            )}
+            {showMaximize && (
+                <button class="win__btn" data-win-btn="maximize" aria-label="Maximize/Restore">▢</button>
+            )}
+            {showClose && (
+                <button class="win__btn" data-win-btn="close" aria-label="Close">✕</button>
+            )}
         </div>
     </div>
 
     <div class="win__content">
         <slot />
     </div>
+
+    {resizable && (
+        <>
+        <div class="win__handle win__handle--n"  data-dir="n"></div>
+        <div class="win__handle win__handle--s"  data-dir="s"></div>
+        <div class="win__handle win__handle--e"  data-dir="e"></div>
+        <div class="win__handle win__handle--w"  data-dir="w"></div>
+        <div class="win__handle win__handle--ne" data-dir="ne"></div>
+        <div class="win__handle win__handle--nw" data-dir="nw"></div>
+        <div class="win__handle win__handle--se" data-dir="se"></div>
+        <div class="win__handle win__handle--sw" data-dir="sw"></div>
+        </>
+    )}
 </div>
+
 <script>
     import '../scripts/window.js';
 </script>

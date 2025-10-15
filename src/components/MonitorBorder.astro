@@ -1,8 +1,10 @@
 ---
+import {Image} from 'astro:assets';
 import Screen from './Screen.astro';
 import '../styles/monitor.css';
 
-import imageWallpaper from '../assets/images/wallpaper.jpg'
+import imageWallpaper from '../assets/images/wallpaper.jpg';
+import imageLogo from '../assets/images/logozilo.png';
 ---
 
 <div class="monitor">
@@ -27,7 +29,7 @@ import imageWallpaper from '../assets/images/wallpaper.jpg'
     </div>
 
     <div class="monitor__bottom">
-        <slot name="bottom" />
+        <Image class="monitor__logo" alt="ZILNULL Logo" src={imageLogo}>
     </div>
 </div>
 
