@@ -1,8 +1,10 @@
 ---
 import MonitorBorder from '../components/MonitorBorder.astro';
-import Window from '../components/Window.astro';
 
 import '../styles/global.css';
+import '../styles/monitor.css';
+import '../styles/screen.css';
+import '../styles/window.css';
 
 const { pageTitle } = Astro.props;
 ---
@@ -20,4 +22,8 @@ const { pageTitle } = Astro.props;
 			<slot />
 		</MonitorBorder>
 	</body>
+
+	<script>
+		import '../scripts/window.js';
+	</script>
 </html>

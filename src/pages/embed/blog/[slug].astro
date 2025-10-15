@@ -1,0 +1,36 @@
+---
+import { getEntry } from "astro:content";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const entries = import.meta.glob("../../../content/blogs/*.md");
+  return Object.keys(entries).map((p) => ({
+    params: { slug: p.split("/").pop()?.replace(".md", "") },
+  }));
+}
+
+const { slug } = Astro.params;
+const entry = await getEntry("blogs", slug!);
+if (!entry) throw new Error("Not found");
+const { Content } = await entry.render();
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      :root { color-scheme: dark light; }
+      body { margin: 0; font-family: system-ui, sans-serif; background: transparent; }
+      .article { padding: 10px; line-height: 1.6; }
+      img, video { max-width: 100%; height: auto; }
+    </style>
+  </head>
+  <body>
+    <article class="article">
+      <h1>{entry.data.title}</h1>
+      <Content />
+    </article>
+  </body>
+</html>

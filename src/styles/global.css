@@ -2,7 +2,7 @@
 :root {
     --border-color: #292828;
     --border-shadow: rgba(0, 0, 0, 0.2);
-    --border-size-top: 50px;
+    --border-size-top: 30px;
     --border-size-bottom: 50px;
     --border-size-side: 30px;
     --background-color: #fff;
@@ -16,6 +16,8 @@
     --window-titlebar-fg: #eaeaea;
     --window-shadow: 0 10px 30px rgba(0,0,0,.35);
     --window-titlebar-h: 34px;
+
+    --taskbar-size: 48px;
 }
 
 html, body {
