@@ -6,7 +6,6 @@ import { APPS } from "./apps/registry";
 export default function Window({ w }: { w: WindowState }) {
     const { dispatch } = useDesktop();
     const ref = React.useRef<HTMLDivElement | null>(null);
-    if (w.minimized) return null;
 
     const style: React.CSSProperties = w.maximized
         ? { left: 0, top: 0, width: '100%', height: '100%' }
@@ -132,7 +131,7 @@ export default function Window({ w }: { w: WindowState }) {
     return (
         <div
             ref={ref}
-            className={`win${w.maximized ? ' win--maximized' : ''}`}
+            className={`win ${w.maximized ? 'win--maximized' : ''} ${w.minimized ? 'win--minimized' : ''}`}
             id={w.id}
             role="dialog"
             aria-label={w.title}
@@ -143,9 +142,15 @@ export default function Window({ w }: { w: WindowState }) {
             <div className="win__titlebar" onPointerDown={onTitlebarPointerDown} onDoubleClick={() => dispatch({ type: "TOGGLE_MAX", appId: w.id })}>
                 <div className="win__title">{w.title}</div>
                 <div className="win__controls">
-                    <button className="win__btn" aria-label="Minimize/Restore" onClick={(ev) => {ev.stopPropagation(); dispatch({ type: 'TOGGLE_MIN', appId: w.id })}}>—</button>
-                    <button className="win__btn" aria-label="Maximize/Restore" onClick={(ev) => {ev.stopPropagation(); dispatch({ type: 'TOGGLE_MAX', appId: w.id })}}>▢</button>
-                    <button className="win__btn" aria-label="Close" onClick={(ev) => {ev.stopPropagation(); dispatch({ type: 'CLOSE', appId: w.id })}}>✕</button>
+                    <button className="win__btn" aria-label="Minimize/Restore" 
+                        onMouseDown={(ev) => { ev.stopPropagation(); dispatch({ type: 'FOCUS', appId: w.id }); }}
+                        onClick={(ev) => {ev.stopPropagation(); dispatch({ type: 'TOGGLE_MIN', appId: w.id })}}>—</button>
+                    <button className="win__btn" aria-label="Maximize/Restore" 
+                        onMouseDown={(ev) => { ev.stopPropagation(); dispatch({ type: 'FOCUS', appId: w.id }); }}
+                        onClick={(ev) => {ev.stopPropagation(); dispatch({ type: 'TOGGLE_MAX', appId: w.id })}}>▢</button>
+                    <button className="win__btn" aria-label="Close" 
+                        onMouseDown={(ev) => { ev.stopPropagation(); dispatch({ type: 'FOCUS', appId: w.id }); }}
+                        onClick={(ev) => {ev.stopPropagation(); dispatch({ type: 'CLOSE', appId: w.id })}}>✕</button>
                 </div>
             </div>
 

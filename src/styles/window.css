@@ -23,7 +23,7 @@
 
 .win.win--minimized {
     transition: 100ms;
-    height: var(--window-titlebar-h) !important;
+    display: none;
 }
 
 .win__titlebar {

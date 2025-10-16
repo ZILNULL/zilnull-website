@@ -71,7 +71,7 @@ function reducer(state: DesktopState, action: DesktopAction): DesktopState {
             const w = state.windows[id]; if (!w) return state;
             return {
                 ...state,
-                windows: { ...state.windows, [id]: { ...w, minimized: !w.minimized, ...(w.minimized ? {} : { maximized: false }) } },
+                windows: { ...state.windows, [id]: { ...w, minimized: !w.minimized }},
             };
         }
         case 'TOGGLE_MAX': {
@@ -79,7 +79,7 @@ function reducer(state: DesktopState, action: DesktopAction): DesktopState {
             const w = state.windows[id]; if (!w) return state;
             return {
                 ...state,
-                windows: { ...state.windows, [id]: { ...w, maximized: !w.maximized, minimized: false } },
+                windows: { ...state.windows, [id]: { ...w, maximized: !w.maximized }},
             };
         }
         case 'MOVE': {

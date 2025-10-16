@@ -11,6 +11,19 @@ function windowsForApp(state: any, appId: string) {
     return { all, visibles, minimized };
 }
 
+function anyWindowForApp(state: any, appId: string) {
+    return state.order.some((id: string) => {
+        const w = state.windows[id];
+        return w.appId === appId;
+    });
+}
+
+function isWindowOnTop(state: any, appId: string) {
+    if (state.order.length == 0) return;
+    const sorted = state.order.map((id: string) => state.windows[id]).sort(byZDesc);
+    return sorted[0].appId === appId && !sorted[0].minimized;
+}
+
 function anyVisibleForApp(state: any, appId: string) {
     return state.order.some((id: string) => {
         const w = state.windows[id];
@@ -60,12 +73,13 @@ export default function Taskbar() {
                     {state.pinned.map((appId) => {
                         const meta = APPS[appId];
                         if (!meta) return null;
-                        const isActive = anyVisibleForApp(state, appId);
+                        const isActive = anyWindowForApp(state, appId);
+                        const isTop = isWindowOnTop(state, appId);
 
                         return (
                             <button
                                 key={appId}
-                                className={`taskbar__icon ${isActive ? "is-active" : ""}`}
+                                className={`taskbar__icon ${isActive ? "is-active" : ""} ${isTop ? "is-top" : ""}`}
                                 role="listitem"
                                 title={meta.title}
                                 aria-label={meta.title}

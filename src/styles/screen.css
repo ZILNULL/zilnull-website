@@ -31,7 +31,7 @@
 
 /* Taskbar */
 .taskbar {
-    z-index: 50;
+    z-index: 9999999;
     position: absolute;
     left: 0; right: 0; bottom: 0;
     height: var(--taskbar-size);
@@ -123,6 +123,12 @@
 .taskbar__icon.is-active::after {
     opacity: 1;
     transform: scaleX(1);
+}
+.taskbar__icon.is-top {
+    background: rgba(255, 255, 255, 0.5);
+}
+.taskbar__icon.is-top:hover {
+    background: rgba(255, 255, 255, 0.75);
 }
 
 .taskbar__clock {
