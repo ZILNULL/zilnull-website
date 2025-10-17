@@ -1,88 +1,338 @@
 /* ==== Blog app layout =================================================== */
 .blog-app {
-    position: absolute; inset: 0;
-    display: flex;
-    flex-direction: column;
-    background: transparent;
+    background-color: var(--blog-bg);
+    margin: auto;
+    height: 100%;
+    width: 100%;
 }
-.blog-app::after { content: ""; display: block; }
 
 .blog-togglebar {
-    position: sticky; top: 0; z-index: 10;
-    display: flex; align-items: center; gap: 8px;
-    padding: 6px 8px;
-    background: rgba(0,0,0,0.35);
-    backdrop-filter: blur(4px);
-    border-bottom: 1px solid rgba(255,255,255,0.12);
+    z-index: 99;
+    position: absolute;
+    top: 0; left: 0;
+    transition: 150ms;
 }
-.blog-togglebar__spacer { flex: 1 1 auto; }
+
+.blog-togglebar.is--open {
+    left: var(--blog-sidebar-width);
+    transition: 150ms;
+}
 
 .blog-toggle {
-    appearance: none;
-    border: 1px solid rgba(255,255,255,0.2);
-    background: rgba(0,0,0,0.15);
-    color: #eaf9f6;
-    padding: 6px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-}
-.blog-toggle:hover { background: rgba(255,255,255,0.08); }
-.blog-content-row {
-  display: flex;
+    background-color: var(--blog-button-no-select);
+    border-radius: 5px;
+    border-color: transparent;
 }
 
-/* Sidebar */
-.blog-sidebar {
-    flex: 0 0 240px;
+.blog-app__content {
+    width: 100%; height: 100%;
     display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 10px 8px;
-    background: rgba(0,0,0,0.35);
-    backdrop-filter: blur(4px);
-    border-right: 1px solid rgba(255,255,255,0.12);
-    min-height: 0;
+    flex-flow: row nowrap;
+    margin: 0;
 }
-.blog-app.blog-app--closed .blog-sidebar {
+
+/* ==== Sidebar style ============ */
+.blog-sidebar {
+    width: var(--blog-sidebar-width);
+    transition: 150ms;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.blog-sidebar::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    width: var(--blog-sidebar-width); height: 100%;
+    clip-path: polygon(0 0, 100% 0, 57% 100%, 0% 100%);
+    background-color: var(--blog-sidebar);
+    transition: 150ms;
+}
+
+.blog-sidebar.is--closed::before {
+    width: 0;
+    transition: 150ms;
+}
+
+.blog-sidebar.is--closed {
+    width: 0;
+    transition: 150ms;
+}
+
+.blog-sidebar.is--closed * {
     display: none;
 }
 
-.blog-main {
-    flex: 1 1 auto;
-    min-width: 0;
-    min-height: 0;
-    overflow: auto;
-    padding: 14px;
-    color: var(--text-color, #000);
+.blog-brand {
+    z-index: 1;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
 }
 
-/* ====== Sidebar internals (kept from before) ====== */
-.blog-brand__title { color: #eaf9f6; font-weight: 700; letter-spacing: .5px; }
+.blog-brand__title {
+    position: relative;
+    font-family: var(--blog-brand-font);
+    font-size: var(--blog-brand-size);
+    font-style: italic;
+    font-weight: bold;
+    color: #FFFFFF;
+    letter-spacing: 3px;
+    z-index: 1;
+}
 
-.blog-nav { display: grid; align-content: start; gap: 8px; }
+.blog-brand__title:before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: -2px;
+    width: 100%;
+    color: #2ecb9a;
+    overflow: hidden;
+    animation: noise-before 4s infinite linear alternate-reverse;
+}
+
+.blog-brand__title:after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 2px;
+    width: 100%;
+    color: #d94e4e;
+    overflow: hidden;
+    animation: noise-after 2s infinite linear alternate-reverse;
+}
+
+.blog-nav {
+    z-index: 1;
+    flex-grow: 1;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    gap: 10px;
+}
+
 .blog-nav__item {
-    appearance: none; border: 0; background: transparent; color: #eaf9f6;
-    text-align: left; padding: 6px 8px; border-radius: 6px; cursor: pointer; position: relative;
+    background-color: #2ecb996b;
+    padding: 10px 20px;
+    width: 80%;
+    border-color: transparent;
+    transition: 75ms;
 }
-.blog-nav__item .blog-tab {
-    display: inline-block; padding: 6px 10px; border-radius: 6px;
-    background: rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.18);
-    transform: translateX(0); transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+
+.blog-nav__item:hover {
+    background-color: #dd5252b2;
+    padding: 20px 20px;
+    width: 100%;
+    cursor: pointer;
+    transition: 75ms;
 }
-.blog-nav__item.is-active .blog-tab {
-    background: rgba(255,255,255,0.08);
-    transform: translateX(10px);
-    box-shadow: 0 0 0 2px rgba(234,249,246,0.35) inset;
+
+.blog-nav__item span {
+    font-family: var(--blog-brand-font);
+    font-size: 20px;
+}
+
+.blog-main {
+    margin: 0;
+    width: 100%; width: 100%;
+}
+
+/* ==== Home page style ============ */
+.blog-home {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%; height: 100%;
+    overflow-x: auto;
+    overflow: auto;
+
+    background-color: var(--blog-bg);
+    font-family: var(--blog-text-font);
+}
+
+.blog-title {
+    font-size: 40px;
+    color: white;
+}
+
+.blog-hero {
+    height: 300px;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    gap: 5px;
+}
+
+.blog-card__preview {
+    border-radius: 10px;
+    border: 2px solid #2ecb9a;
+    height: 200px;
+    width: 400px;
+    margin-bottom: 5px;
+}
+
+.blog-card__preview:hover {
+    cursor: pointer;
+    border: 2px solid #dd5252b2;
+}
+
+.blog-card__title {
+    color: white;
+}
+
+.blog-card__meta {
+    color: white;
+}
+
+.blog-featured {
+    flex-grow: 1;
 }
 
 /* ====== Responsive: on narrow widths, sidebar overlays and hides entirely ====== */
 @media (max-width: 860px) {
     .blog-sidebar {
-        position: absolute; z-index: 20;
-        top: 34px;
-        left: 0; bottom: 0; width: 240px;
-        border-right: 1px solid rgba(255,255,255,0.18);
+        width: 100%;
+        clip-path: none;
     }
-    .blog-app.blog-app--closed .blog-sidebar { display: none; }
-    .blog-main { position: relative; z-index: 1; }
+}
+
+/* ===== Animations ====== */
+@keyframes noise-before {
+    0% {
+        clip: rect(61px, 9999px, 52px, 0);
+    }
+    5% {
+        clip: rect(33px, 9999px, 144px, 0);
+    }
+    10% {
+        clip: rect(121px, 9999px, 115px, 0);
+    }
+    15% {
+        clip: rect(144px, 9999px, 162px, 0);
+    }
+    20% {
+        clip: rect(62px, 9999px, 180px, 0);
+    }
+    25% {
+        clip: rect(34px, 9999px, 42px, 0);
+    }
+    30% {
+        clip: rect(147px, 9999px, 179px, 0);
+    }
+    35% {
+        clip: rect(99px, 9999px, 63px, 0);
+    }
+    40% {
+        clip: rect(188px, 9999px, 122px, 0);
+    }
+    45% {
+        clip: rect(154px, 9999px, 14px, 0);
+    }
+    50% {
+        clip: rect(63px, 9999px, 37px, 0);
+    }
+    55% {
+        clip: rect(161px, 9999px, 147px, 0);
+    }
+    60% {
+        clip: rect(109px, 9999px, 175px, 0);
+    }
+    65% {
+        clip: rect(157px, 9999px, 88px, 0);
+    }
+    70% {
+        clip: rect(173px, 9999px, 131px, 0);
+    }
+    75% {
+        clip: rect(62px, 9999px, 70px, 0);
+    }
+    80% {
+        clip: rect(24px, 9999px, 153px, 0);
+    }
+    85% {
+        clip: rect(138px, 9999px, 40px, 0);
+    }
+    90% {
+        clip: rect(79px, 9999px, 136px, 0);
+    }
+    95% {
+        clip: rect(25px, 9999px, 34px, 0);
+    }
+    100% {
+        clip: rect(173px, 9999px, 166px, 0);
+    }
+}
+
+@keyframes noise-after {
+    0% {
+        clip: rect(26px, 9999px, 33px, 0);
+    }
+    5% {
+        clip: rect(140px, 9999px, 198px, 0);
+    }
+    10% {
+        clip: rect(184px, 9999px, 89px, 0);
+    }
+    15% {
+        clip: rect(121px, 9999px, 6px, 0);
+    }
+    20% {
+        clip: rect(181px, 9999px, 99px, 0);
+    }
+    25% {
+        clip: rect(154px, 9999px, 133px, 0);
+    }
+    30% {
+        clip: rect(134px, 9999px, 169px, 0);
+    }
+    35% {
+        clip: rect(26px, 9999px, 187px, 0);
+    }
+    40% {
+        clip: rect(147px, 9999px, 137px, 0);
+    }
+    45% {
+        clip: rect(31px, 9999px, 52px, 0);
+    }
+    50% {
+        clip: rect(191px, 9999px, 109px, 0);
+    }
+    55% {
+        clip: rect(74px, 9999px, 54px, 0);
+    }
+    60% {
+        clip: rect(145px, 9999px, 75px, 0);
+    }
+    65% {
+        clip: rect(153px, 9999px, 198px, 0);
+    }
+    70% {
+        clip: rect(99px, 9999px, 136px, 0);
+    }
+    75% {
+        clip: rect(118px, 9999px, 192px, 0);
+    }
+    80% {
+        clip: rect(1px, 9999px, 83px, 0);
+    }
+    85% {
+        clip: rect(145px, 9999px, 98px, 0);
+    }
+    90% {
+        clip: rect(121px, 9999px, 154px, 0);
+    }
+    95% {
+        clip: rect(156px, 9999px, 44px, 0);
+    }
+    100% {
+        clip: rect(67px, 9999px, 122px, 0);
+    }
 }

@@ -45,10 +45,10 @@ export default function BlogApp({winId}: {winId: string}) {
     };
 
     return (
-        <div className={`blog-app ${sidebarOpen ? "blog-app--open" : "blog-app--closed"}`}>
-            <div className="blog-togglebar">
+        <div className={`blog-app`}>
+            <div className={`blog-togglebar ${sidebarOpen ? "is--open" : "is--closed"}`}>
                 <button
-                    className="blog-toggle"
+                    className={`blog-toggle`}
                     aria-label={sidebarOpen ? "Hide sidebar" : "Show sidebar"}
                     aria-pressed={sidebarOpen}
                     onClick={() => setSidebarOpen((v) => !v)}
@@ -57,154 +57,152 @@ export default function BlogApp({winId}: {winId: string}) {
                 </button>
             </div>
 
-            <div className="blog-sidebar" aria-label="Blog navigation">
-                <div className="blog-brand">
-                    <div className="blog-brand__title">ZILNULL</div>
+            <div className={`blog-app__content`}>
+                <div className={`blog-sidebar ${sidebarOpen ? "is--open" : "is--closed"}`} aria-label="Blog navigation">
+                    <div className="blog-brand">
+                        <div className="blog-brand__title" data-text="ZIL∅">ZIL∅</div>
+                    </div>
+
+                    <div className="blog-nav">
+                        <button
+                            className={`blog-nav__item ${route === "blogs" ? "is-active" : ""}`}
+                            onClick={() => go("blogs")}
+                        >
+                            <span className="blog-tab">Blogs</span>
+                        </button>
+
+                        <button
+                            className={`blog-nav__item ${route === "home" ? "is-active" : ""}`}
+                            onClick={() => go("home")}
+                        >
+                            <span className="blog-tab">Home</span>
+                        </button>
+
+                        <button
+                            className={`blog-nav__item ${route === "about" ? "is-active" : ""}`}
+                            onClick={() => go("about")}
+                        >
+                            <span className="blog-tab">About Me</span>
+                        </button>
+                    </div>
                 </div>
 
-                <div className="blog-nav">
-                    <button
-                        className={`blog-nav__item ${route === "blogs" ? "is-active" : ""}`}
-                        onClick={() => go("blogs")}
-                    >
-                        <span className="blog-tab">Blogs</span>
-                    </button>
+                <div className="blog-main" aria-live="polite">
 
-                    <button
-                        className={`blog-nav__item ${route === "home" ? "is-active" : ""}`}
-                        onClick={() => go("home")}
-                    >
-                        <span className="blog-tab">Home</span>
-                    </button>
+                    {/* HOME PAGE */}
+                    {route === "home" && (
+                        <div className="blog-home">
+                            <h2 className="blog-title">echo "Welcome! :)"</h2>
 
-                    <button
-                        className={`blog-nav__item ${route === "about" ? "is-active" : ""}`}
-                        onClick={() => go("about")}
-                    >
-                        <span className="blog-tab">About Me</span>
-                    </button>
-                </div>
-            </div>
+                            <div className="blog-hero">
+                                <div className="blog-hero__card">
+                                    { recent ? (
+                                        <>
+                                            <div className="blog-card__preview" onClick={() => openPost(recent)}></div>
+                                            <div className="blog-card__title">{recent.title}</div>
+                                            <div className="blog-card__meta">
+                                                {new Date(recent.date).toLocaleDateString()}
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <div className="blog-card__empty">No posts yet</div>
+                                    )}
+                                </div>
+                            </div>
 
-            <div className="blog-main" aria-live="polite">
-
-                {/* HOME PAGE */}
-                {route === "home" && (
-                    <div className="blog-home">
-                        <h2 className="blog-title">Main Page</h2>
-
-                        <div className="blog-hero">
-                            <div className="blog-hero__card">
-                                { recent ? (
-                                    <>
-                                        <div className="blog-card__title">{recent.title}</div>
+                            <div className="blog-featured">
+                                {featured.map((p) => (
+                                    <div key={p.slug} className="blog-featured__card">
+                                        <div className="blog-card__preview" onClick={() => openPost(p)}></div>
+                                        <div className="blog-card__title">{p.title}</div>
                                         <div className="blog-card__meta">
-                                            {new Date(recent.date).toLocaleDateString()}
+                                            {new Date(p.date).toLocaleDateString()}
                                         </div>
-                                        <button className="blog-btn" onClick={() => openPost(recent)}>
-                                            Read most recent
-                                        </button>
-                                    </>
-                                ) : (
-                                    <div className="blog-card__empty">No posts yet</div>
+                                    </div>
+                                ))}
+                                {featured.length === 0 && (
+                                    <div className="blog-featured__empty">No featured posts yet.</div>
                                 )}
                             </div>
                         </div>
+                    )}
 
-                         <div className="blog-featured">
-                            {featured.map((p) => (
-                                <div key={p.slug} className="blog-featured__card">
-                                    <div className="blog-card__title">{p.title}</div>
-                                    <div className="blog-card__meta">
-                                        {new Date(p.date).toLocaleDateString()}
-                                    </div>
-                                    <button className="blog-btn" onClick={() => openPost(p)}>
-                                        Read
-                                    </button>
-                                </div>
-                            ))}
-                            {featured.length === 0 && (
-                                <div className="blog-featured__empty">No featured posts yet.</div>
-                            )}
-                        </div>
-                    </div>
-                )}
+                    {/* BLOGS SELECTION PAGE */}
+                    {route === "blogs" && (
+                        <div className="blog-list">
+                            <header className="blog-list__head">
+                                <h2 className="blog-title">All Blogs</h2>
 
-                {/* BLOGS SELECTION PAGE */}
-                {route === "blogs" && (
-                    <div className="blog-list">
-                        <header className="blog-list__head">
-                            <h2 className="blog-title">All Blogs</h2>
-
-                            {/* Tag filter (shows only if you add tags in content + API) */}
-                            {allTags.length > 0 && (
-                                <div className="blog-tags">
-                                    <button
-                                        className={`blog-tag ${selectedTag === null ? "is-active" : ""}`}
-                                        onClick={() => setSelectedTag(null)}
-                                    >
-                                        All
-                                    </button>
-                                    {allTags.map((t) => (
+                                {/* Tag filter (shows only if you add tags in content + API) */}
+                                {allTags.length > 0 && (
+                                    <div className="blog-tags">
                                         <button
-                                            key={t}
-                                            className={`blog-tag ${selectedTag === t ? "is-active" : ""}`}
-                                            onClick={() => setSelectedTag(t)}
+                                            className={`blog-tag ${selectedTag === null ? "is-active" : ""}`}
+                                            onClick={() => setSelectedTag(null)}
                                         >
-                                            {t}
+                                            All
                                         </button>
-                                    ))}
-                                </div>
-                            )}
-                        </header>
-
-                        <ul className="blog-list__grid">
-                            {filteredPosts.map((p) => (
-                                <li key={p.slug} className="blog-list__item">
-                                    <article className="blog-card">
-                                        <header className="blog-card__hd">
-                                            <h3 className="blog-card__title">{p.title}</h3>
-                                            <time className="blog-card__date">
-                                                {new Date(p.date).toLocaleDateString()}
-                                            </time>
-                                        </header>
-                                        <footer className="blog-card__ft">
-                                            <button className="blog-btn" onClick={() => openPost(p)}>
-                                                Open
+                                        {allTags.map((t) => (
+                                            <button
+                                                key={t}
+                                                className={`blog-tag ${selectedTag === t ? "is-active" : ""}`}
+                                                onClick={() => setSelectedTag(t)}
+                                            >
+                                                {t}
                                             </button>
-                                        </footer>
-                                    </article>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
+                                        ))}
+                                    </div>
+                                )}
+                            </header>
 
-                {/* POST PAGE */}
-                {route === "post" && embedUrl && (
-                    <section className="blog-viewer">
-                        <div className="blog-viewer__bar">
-                            <button className="blog-btn" onClick={() => go("blogs")}>
-                                ← Back to list
-                            </button>
+                            <ul className="blog-list__grid">
+                                {filteredPosts.map((p) => (
+                                    <li key={p.slug} className="blog-list__item">
+                                        <article className="blog-card">
+                                            <header className="blog-card__hd">
+                                                <h3 className="blog-card__title">{p.title}</h3>
+                                                <time className="blog-card__date">
+                                                    {new Date(p.date).toLocaleDateString()}
+                                                </time>
+                                            </header>
+                                            <footer className="blog-card__ft">
+                                                <button className="blog-btn" onClick={() => openPost(p)}>
+                                                    Open
+                                                </button>
+                                            </footer>
+                                        </article>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
-                        <div className="blog-viewer__frame">
-                            <iframe
-                                src={embedUrl}
-                                className="blog-iframe"
-                                title="Blog post"
-                            />
-                        </div>
-                    </section>
-                )}
+                    )}
 
-                {/* ABOUT ME */}
-                {route === "about" && (
-                    <section className="blog-about">
-                        <h2 className="blog-title">About Me</h2>
-                        <p>Write a short intro here (or link to a separate page).</p>
-                    </section>
-                )}
+                    {/* POST PAGE */}
+                    {route === "post" && embedUrl && (
+                        <section className="blog-viewer">
+                            <div className="blog-viewer__bar">
+                                <button className="blog-btn" onClick={() => go("blogs")}>
+                                    ← Back to list
+                                </button>
+                            </div>
+                            <div className="blog-viewer__frame">
+                                <iframe
+                                    src={embedUrl}
+                                    className="blog-iframe"
+                                    title="Blog post"
+                                />
+                            </div>
+                        </section>
+                    )}
+
+                    {/* ABOUT ME */}
+                    {route === "about" && (
+                        <section className="blog-about">
+                            <h2 className="blog-title">About Me</h2>
+                            <p>Write a short intro here (or link to a separate page).</p>
+                        </section>
+                    )}
+                </div>
             </div>
         </div>
     )

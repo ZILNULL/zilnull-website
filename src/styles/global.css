@@ -18,6 +18,14 @@
     --window-titlebar-h: 34px;
 
     --taskbar-size: 48px;
+
+    --blog-bg: rgb(51, 51, 51);
+    --blog-sidebar: rgb(27, 27, 27);
+    --blog-button-no-select: rgba(0, 0, 0, 0.5);
+    --blog-sidebar-width: 300px;
+    --blog-brand-font: 'Helvetica';
+    --blog-brand-size: 50px;
+    --blog-text-font: "Helvetica";
 }
 
 html, body {
