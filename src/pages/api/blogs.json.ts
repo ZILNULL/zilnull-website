@@ -11,6 +11,7 @@ export const GET: APIRoute = async () => {
       slug: p.slug,
       title: p.data.title,
       date: p.data.date,
+      tags: p.data.tags,
       url: `/blog/${p.slug}/`,
       embedUrl: `/embed/blog/${p.slug}/`,
     }));

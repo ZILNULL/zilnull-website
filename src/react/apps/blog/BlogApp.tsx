@@ -11,7 +11,7 @@ type Post = {
 };
 
 export default function BlogApp({winId}: {winId: string}) {
-    const [sidebarOpen, setSidebarOpen] = React.useState(true);
+    const [sidebarOpen, setSidebarOpen] = React.useState(false);
     const [route, setRoute] = React.useState<Route>("home");
     const [posts, setPosts] = React.useState<Post[]>([]);
     const [embedUrl, setEmbedUrl] = React.useState<string | null>(null);
@@ -35,6 +35,7 @@ export default function BlogApp({winId}: {winId: string}) {
         selectedTag ? posts.filter((p) => (p.tags ?? []).includes(selectedTag)) : posts;
     
     const go = (r: Route) => {
+        setSidebarOpen(false);
         setRoute(r);
         if (r !== "post") setEmbedUrl(null);
     };
@@ -53,7 +54,7 @@ export default function BlogApp({winId}: {winId: string}) {
                     aria-pressed={sidebarOpen}
                     onClick={() => setSidebarOpen((v) => !v)}
                 >
-                    {sidebarOpen ? "<" : ">"}
+                    {sidebarOpen ? " < " : " > "}
                 </button>
             </div>
 
@@ -110,6 +111,9 @@ export default function BlogApp({winId}: {winId: string}) {
                                 </div>
                             </div>
 
+                            <div className="blog-featured__title">Featured Blogs:</div>
+                            <hr />
+
                             <div className="blog-featured">
                                 {featured.map((p) => (
                                     <div key={p.slug} className="blog-featured__card">
@@ -155,23 +159,19 @@ export default function BlogApp({winId}: {winId: string}) {
                                 )}
                             </header>
 
+                            <hr />
+
                             <ul className="blog-list__grid">
                                 {filteredPosts.map((p) => (
-                                    <li key={p.slug} className="blog-list__item">
-                                        <article className="blog-card">
-                                            <header className="blog-card__hd">
-                                                <h3 className="blog-card__title">{p.title}</h3>
-                                                <time className="blog-card__date">
-                                                    {new Date(p.date).toLocaleDateString()}
-                                                </time>
-                                            </header>
-                                            <footer className="blog-card__ft">
-                                                <button className="blog-btn" onClick={() => openPost(p)}>
-                                                    Open
-                                                </button>
-                                            </footer>
+                                    <div key={p.slug} className="blog-list__item">
+                                        <article className="blog-featured__card">
+                                            <div className="blog-card__preview" onClick={() => openPost(p)}></div>
+                                            <div className="blog-card__title">{p.title}</div>
+                                            <div className="blog-card__meta">
+                                                {new Date(p.date).toLocaleDateString()}
+                                            </div>
                                         </article>
-                                    </li>
+                                    </div>
                                 ))}
                             </ul>
                         </div>
@@ -198,8 +198,31 @@ export default function BlogApp({winId}: {winId: string}) {
                     {/* ABOUT ME */}
                     {route === "about" && (
                         <section className="blog-about">
+                            <div className="blog-about__contact-me">
+                                <span className="contact-me-text">Find me:</span>
+                                <img src="/images/bsky_logo.png" onClick={() => window.open("https://bsky.app/profile/zilnull.bsky.social")} />
+                                <img src="/images/x_logo.jpg" onClick={() => window.open("https://x.com/zilnull")} />
+                                <img src="/images/github_logo.png" onClick={() => window.open("https://github.com/ZILNULL")} />
+                            </div>
                             <h2 className="blog-title">About Me</h2>
-                            <p>Write a short intro here (or link to a separate page).</p>
+                            <p>Hi, I'm <span className="text-bold">Zil∅</span>, also known as <span className="text-bold">ZILNULL</span>! You can call me Zil, though. I think we'll both agree that's shorter, easier, and doesn't require you to copy and paste a special character every time you want to use my name.</p>
+                            <h3>I'm a [thing] on the Internet!</h3>
+                            <div className="blog-about__image"><img src="/images/zilnull_what_transparent.png" /></div>
+                            <p>I have a passion for web development, game design, and programming in general. I've been doing it since I was in middle school, and since then I've gained a lot of experience in a variety of fields: Python, web dev, database management, Artificial Intelligence, etc.</p>
+                            <p>Of course, outside of coding, I also really have many more interests:</p>
+                            <ul>
+                                <li>Pokémon</li>
+                                <li>Visual Novels</li>
+                                <li>Philosphy</li>
+                                <li>Animation and painting</li>
+                            </ul>
+                            <p>I hope we can get along! I like to think I'm a pretty approachable person, as long as my boundaries are respected. Feel free to reach out. :)</p>
+                            <h3>FAQ</h3>
+                            <ul>
+                                <li><span className="text-bold">What's your gender?</span> I'm a [thing]!</li>
+                                <li><span className="text-bold">What's your age?</span> I'm [number over 18] years old!</li>
+                                <li><span className="text-bold">What's your real name?</span> It's on the first paragraph... What, do you want my ID?</li>
+                            </ul>
                         </section>
                     )}
                 </div>

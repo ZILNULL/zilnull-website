@@ -1,8 +1,8 @@
 ---
-title: Hello World
-date: 2025-10-14
+title: Hello World 2
+date: 2025-12-14
 description: First post, inside a window.
-tags: ["test", "hello", "blog"]
+tags: ["test", "hello2", "blog"]
 ---
 
 This post will open inside a draggable window.
