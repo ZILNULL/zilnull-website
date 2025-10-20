@@ -140,7 +140,12 @@ export default function Window({ w }: { w: WindowState }) {
             onMouseDown={onFocus}
         >
             <div className="win__titlebar" onPointerDown={onTitlebarPointerDown} onDoubleClick={() => dispatch({ type: "TOGGLE_MAX", appId: w.id })}>
-                <div className="win__title">{w.title}</div>
+                <div className="win__title">
+                    {APPS[w.appId]?.iconUrl && (
+                        <img className="win__titleicon" src={APPS[w.appId]!.iconUrl} alt="" />
+                    )}
+                    {w.title}
+                </div>
                 <div className="win__controls">
                     <button className="win__btn" aria-label="Minimize/Restore" 
                         onMouseDown={(ev) => { ev.stopPropagation(); dispatch({ type: 'FOCUS', appId: w.id }); }}

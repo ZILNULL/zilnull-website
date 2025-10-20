@@ -23,7 +23,7 @@ export type AppMeta = {
   id: AppId;
   title: string;
   size?: { w: number; h: number };
-  Icon?: React.ComponentType<{ className?: string }>;
+  iconUrl?: string;
   Component: React.ComponentType<{ winId: string }>;
 };
 

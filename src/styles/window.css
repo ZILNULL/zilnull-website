@@ -46,6 +46,12 @@
     text-overflow: ellipsis;
 }
 
+.win__title { display: inline-flex; align-items: center; gap: 8px; }
+.win__titleicon {
+  width: 16px; height: 16px; object-fit: contain;
+  image-rendering: smooth;
+}
+
 .win__controls {
     display: flex;
     gap: 6px;

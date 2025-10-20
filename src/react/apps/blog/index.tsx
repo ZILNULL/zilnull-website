@@ -6,6 +6,7 @@ const meta: AppMeta = {
     id: "blog",
     title: "Blog",
     size: { w: 640, h: 420 },
+    iconUrl: "/images/blog_icon.png",
     Component: BlogApp,
 };
 

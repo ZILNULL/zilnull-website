@@ -6,3 +6,5 @@ tags: ["test", "hello", "blog"]
 ---
 
 This post will open inside a draggable window.
+
+<x-counter start="5"></x-counter>

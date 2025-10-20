@@ -101,6 +101,14 @@
     outline-offset: 2px;
 }
 
+.taskbar__iconimg {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  display: block;
+  image-rendering: smooth;
+}
+
 .taskbar__dot {
     width: 22px;
     height: 22px;
@@ -149,4 +157,64 @@
         width: calc(var(--taskbar-size) - 6px);
         height: calc(var(--taskbar-size) - 6px);
     }
+}
+
+/* ===== Desktop shortcuts ===== */
+.desktop {
+  position: absolute; inset: 0;
+  padding: 16px;
+  pointer-events: none;       /* let windows pass through by default */
+}
+
+/* make the icons themselves clickable */
+.desktop__grid { 
+  pointer-events: auto;
+  margin: 0; padding: 0; list-style: none;
+  display: grid; gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  align-content: start;
+  max-width: 520px;           /* icons cluster on the left like classic desktops */
+}
+
+.desktop__icon {
+  appearance: none;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #eaf9f6;
+  width: 100%;
+  padding: 8px 6px;
+  border-radius: 10px;
+  cursor: default;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+}
+
+.desktop__icon:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.12);
+}
+
+.desktop__icon.is-selected {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.25);
+}
+
+.desktop__img {
+  width: 48px; height: 48px; object-fit: contain;
+  image-rendering: smooth;
+  filter: drop-shadow(0 1px 0 rgba(0,0,0,0.35));
+}
+
+.desktop__dot {
+  width: 42px; height: 42px; border-radius: 50%; background: #000;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.2) inset;
+}
+
+.desktop__label {
+  text-align: center;
+  line-height: 1.2;
+  font-size: 12px;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.5);
+  word-break: break-word;
 }

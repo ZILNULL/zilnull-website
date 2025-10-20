@@ -86,7 +86,10 @@ export default function Taskbar() {
                                 type="button"
                                 onClick={() => handleAppClick(appId)}
                             >
-                                <span className="taskbar__dot" aria-hidden="true"></span>
+                                {meta.iconUrl
+                                    ? <img className="taskbar__iconimg" src={meta.iconUrl} alt="" />
+                                    : <span className="taskbar__dot" aria-hidden="true" />
+                                }
                             </button>
                         );
                     })}
