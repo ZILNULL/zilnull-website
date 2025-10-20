@@ -35,17 +35,20 @@
     position: absolute;
     left: 0; right: 0; bottom: 0;
     height: var(--taskbar-size);
+    max-width: 100%;
+    font-family: url("/public/fonts/PressStart2P.ttf");
 
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    padding: 0 10px;
+    padding: 10 0px;
 
-    background: rgba(25, 201, 177, 0.35);
+    background: rgb(9 165 144);
     backdrop-filter: blur(4px);
-    border-top: 1px solid rgba(31, 218, 186, 0.12);
+    border-top: 4px solid rgb(0, 0, 0);
     pointer-events: auto;
+    user-select: none;
 }
 
 .taskbar__left,
@@ -53,6 +56,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    height: 100%;
 }
 
 .taskbar__apps {
@@ -64,23 +68,32 @@
 
 .taskbar__start {
     appearance: none;
-    width: calc(var(--taskbar-size) - 12px);
-    height: calc(var(--taskbar-size) - 12px);
-    border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.16);
-    background: rgba(0,0,0,0.15);
-    color: #eaf9f6;
-    font-size: 18px;
-    line-height: 1;
-    display: inline-flex;
+    height: var(--taskbar-size);
+    padding: 0px 10px;
+    border-right: 3px solid black;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-flow: row nowrap;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    gap: 5px;
+    user-select: none;
 }
-.taskbar__start:hover { background: rgba(255,255,255,0.08); }
-.taskbar__start:focus-visible {
-    outline: 2px solid rgba(255,255,255,0.6);
-    outline-offset: 2px;
+.taskbar__start img {
+    height: 90%;
+    width: auto;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+.taskbar__start:hover {
+    background-color: rgb(168, 248, 236);
+}
+.taskbar__start:active {
+    background-color: rgb(113, 196, 185);
+}
+.taskbar__start-text {
+    font-family: 'PressStart2P';
 }
 
 .taskbar__icon {
@@ -88,14 +101,37 @@
     border: none;
     background: transparent;
     padding: 6px;
-    border-radius: 8px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     position: relative;
+    gap: 3px;
+    transition: 75ms;
 }
-.taskbar__icon:hover { background: rgba(255,255,255,0.08); }
+
+.taskbar__icontext {
+    width: 0;
+    transition: 75ms;
+}
+
+.taskbar__icontext span {
+    font-family: 'PressStart2P';
+    display: none;
+}
+
+.taskbar__icon:hover { 
+    background: rgb(221, 114, 114); 
+    transition: 75ms; 
+    border: 3px solid rgb(202, 96, 96);
+}
+.taskbar__icon.is-top .taskbar__icontext {
+    width: auto;
+    transition: 75ms;
+}
+.taskbar__icon.is-top .taskbar__icontext span {
+    display: block;
+}
 .taskbar__icon:focus-visible {
     outline: 2px solid rgba(255,255,255,0.6);
     outline-offset: 2px;
@@ -107,6 +143,11 @@
   object-fit: contain;
   display: block;
   image-rendering: smooth;
+}
+
+.taskbar__icon:hover .taskbar__iconimg {
+    width: 26px;
+    height: 26px;
 }
 
 .taskbar__dot {
@@ -133,22 +174,24 @@
     transform: scaleX(1);
 }
 .taskbar__icon.is-top {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgb(221, 114, 114);
+    border: 3px solid rgb(202, 96, 96);
 }
 .taskbar__icon.is-top:hover {
-    background: rgba(255, 255, 255, 0.75);
+    background: rgb(247, 160, 160);
 }
 
 .taskbar__clock {
-    color: #eaf9f6;
-    font-size: 12px;
+    background-color: black;
+    padding: 0px 10px;
+    color: #ffffff;
+    font-family: 'PressStart2P';
     font-variant-numeric: tabular-nums;
-    opacity: 0.9;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
     user-select: none;
-}
-.taskbar__clock:hover {
-    background: rgba(255,255,255,0.08);
-    cursor: pointer;
 }
 
 @media (max-width: 640px) {
@@ -163,7 +206,8 @@
 .desktop {
   position: absolute; inset: 0;
   padding: 16px;
-  pointer-events: none;       /* let windows pass through by default */
+  pointer-events: none;
+  user-select: none;
 }
 
 /* make the icons themselves clickable */
@@ -173,7 +217,7 @@
   display: grid; gap: 12px;
   grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
   align-content: start;
-  max-width: 520px;           /* icons cluster on the left like classic desktops */
+  max-width: 520px;
 }
 
 .desktop__icon {
@@ -215,6 +259,10 @@
   text-align: center;
   line-height: 1.2;
   font-size: 12px;
-  text-shadow: 0 1px 0 rgba(0,0,0,0.5);
   word-break: break-word;
+  font-family: 'PressStart2P';
+  background-color: rgb(238, 238, 224);
+  color: black;
+  border-radius: 8px;
+  padding: 5px 10px;
 }

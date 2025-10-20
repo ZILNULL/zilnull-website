@@ -9,7 +9,7 @@
 .blog-togglebar {
     z-index: 99;
     position: absolute;
-    top: 5px; left: 5px;
+    top: calc(13px + var(--window-titlebar-h)); left: 5px;
     transition: 150ms;
 }
 

@@ -67,7 +67,10 @@ export default function Taskbar() {
     return (
         <div className="taskbar" aria-label="Taskbar" style={{ pointerEvents: "auto" }}>
             <div className="taskbar__left">
-                <button className="taskbar__start" title="Start" aria-label="Start">⊞</button>
+                <div className="taskbar__start" title="Start" aria-label="Start">
+                    <img src="/images/logo_start_zilo.png" />
+                    <span className="taskbar__start-text">START</span>
+                </div>
 
                 <div className="taskbar__apps" role="list">
                     {state.pinned.map((appId) => {
@@ -90,6 +93,7 @@ export default function Taskbar() {
                                     ? <img className="taskbar__iconimg" src={meta.iconUrl} alt="" />
                                     : <span className="taskbar__dot" aria-hidden="true" />
                                 }
+                                <div className="taskbar__icontext"><span>{meta.title}</span></div>
                             </button>
                         );
                     })}
@@ -103,16 +107,35 @@ export default function Taskbar() {
 }
 
 function Clock() {
-    const [text, setText] = React.useState(() => formatTime(new Date()));
-    React.useEffect(() => {
-        const i = setInterval(() => setText(formatTime(new Date())), 60_000);
-        return () => clearInterval(i);
-    }, []);
-    return <time className="taskbar__clock">{text}</time>;
-}
+    const [now, setNow] = React.useState(() => new Date());
 
-function formatTime(d: Date) {
-    const hh = String(d.getHours()).padStart(2, "0");
-    const mm = String(d.getMinutes()).padStart(2, "0");
-    return `${hh}:${mm}`;
+    React.useEffect(() => {
+        const step = 60_000;
+        const msUntilNextMinute = step - (Date.now() % step);
+
+        const t0 = window.setTimeout(() => {
+            setNow(new Date());
+            const i = window.setInterval(() => setNow(new Date()), step);
+            return () => clearInterval(i);
+        }, msUntilNextMinute);
+
+        return () => clearTimeout(t0);
+    }, []);
+
+    const formatter = React.useMemo(
+        () =>
+        new Intl.DateTimeFormat(undefined, {
+            hour: "2-digit",
+            minute: "2-digit",
+        }),
+        []
+    );
+
+    return (
+        <div className="taskbar__clock">
+            <time className="taskbar__clock-time" dateTime={now.toISOString()}>
+                {formatter.format(now)}
+            </time>
+        </div>
+    );
 }
