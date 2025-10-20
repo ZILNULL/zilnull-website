@@ -15,6 +15,7 @@ const meta: AppMeta = {
     title: "Notes",
     size: { w: 420, h: 300 },
     iconUrl: "/images/notes_icon.png",
+    maximized: false,
     Component: NotesApp,
 };
 

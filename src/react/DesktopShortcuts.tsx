@@ -29,7 +29,6 @@ export default function DesktopShortcuts({ shortcuts }: { shortcuts: string[] })
     }
 
     if (visibles.length > 0) {
-      // Focus the topmost visible window (desktop dbl-click usually brings it forward)
       dispatch({ type: "FOCUS", appId: visibles[0].id });
       return;
     }
@@ -38,7 +37,7 @@ export default function DesktopShortcuts({ shortcuts }: { shortcuts: string[] })
     dispatch({
       type: "OPEN",
       appId,
-      init: { title: meta.title, w: meta.size?.w, h: meta.size?.h },
+      init: { title: meta.title, w: meta.size?.w, h: meta.size?.h, maximized: meta.maximized },
     });
   };
 

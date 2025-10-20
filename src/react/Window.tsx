@@ -160,7 +160,7 @@ export default function Window({ w }: { w: WindowState }) {
             </div>
 
             <div className="win__content">
-                {AppComponent ? <AppComponent winId={w.id} /> : <div style={{ padding: 10 }}>Unknown app: {w.appId}</div>}
+                {AppComponent ? <AppComponent winId={w.id} initial={w.payload} /> : <div style={{ padding: 10 }}>Unknown app: {w.appId}</div>}
             </div>
             
             <div className="win__handle win__handle--n"  data-dir="n" onPointerDown={onHandlePointerDown("n")}/>

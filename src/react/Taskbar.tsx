@@ -60,7 +60,7 @@ export default function Taskbar() {
         dispatch({
             type: "OPEN",
             appId,
-            init: { title: meta.title, w: meta.size?.w, h: meta.size?.h },
+            init: { title: meta.title, w: meta.size?.w, h: meta.size?.h, maximized: meta.maximized },
         });
     };
 

@@ -1,6 +1,7 @@
 ---
 import { getEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import DesktopApp from '../../react/DesktopApp.tsx';
 
 export async function getStaticPaths() {
   const entries = import.meta.glob("../../content/blogs/*.md");
@@ -13,11 +14,20 @@ const { slug } = Astro.params;
 const entry = await getEntry("blogs", slug!);
 if (!entry) throw new Error("Not found");
 const { Content } = await entry.render();
+
+const initialWindows = [
+  {
+    appId: 'blog',
+    payload: { postSlug: slug, route: 'post' },
+    init: { maximized: true, }
+  }
+];
 ---
 
 <BaseLayout title={entry.data.title}>
-  <article class="prose">
-    <h1>{entry.data.title}</h1>
-    <Content />
-  </article>
+  <DesktopApp 
+    client:load 
+    pinnedApps={['blog','notes']} 
+    shortcuts={['blog','notes']} 
+    initialWindows={initialWindows} />
 </BaseLayout>

@@ -1,18 +1,9 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Window from "../components/Window.astro";
+import DesktopApp from '../react/DesktopApp.tsx';
 ---
 
 <BaseLayout>
-    <!--
-    <Window id="blog-001" title="My Blog Post" x={120} y={90} width={520} height={360}>
-        <h2 style="margin:0 0 8px 0;">Hello Window</h2>
-        <p>Maximize to fill the screen, click again to restore. Close removes it.</p>
-    </Window>
-
-    <Window id="blog-002" title="My Blog Post" x={150} y={200} width={540} height={360}>
-        <h2 style="margin:0 0 8px 0;">Hello Window</h2>
-        <p>Maximize to fill the screen, click again to restore. Close removes it.</p>
-    </Window>
-     -->
+    <DesktopApp client:load pinnedApps={['blog','notes']} shortcuts={['blog','notes']} />
 </BaseLayout>

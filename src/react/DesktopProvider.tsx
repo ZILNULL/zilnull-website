@@ -30,8 +30,9 @@ function reducer(state: DesktopState, action: DesktopAction): DesktopState {
                 w: action.init?.w ?? 520,
                 h: action.init?.h ?? 340,
                 minimized: false,
-                maximized: false,
+                maximized: action.init?.maximized ?? false,
                 z: top,
+                payload: action.payload ?? action.init?.payload,
             };
 
             return {

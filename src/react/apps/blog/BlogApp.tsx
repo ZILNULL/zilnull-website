@@ -10,7 +10,7 @@ type Post = {
     tags?: string[];
 };
 
-export default function BlogApp({winId}: {winId: string}) {
+export default function BlogApp({winId, initial}: {winId: string, initial?:any }) {
     const [sidebarOpen, setSidebarOpen] = React.useState(false);
     const [route, setRoute] = React.useState<Route>("home");
     const [posts, setPosts] = React.useState<Post[]>([]);
@@ -24,6 +24,17 @@ export default function BlogApp({winId}: {winId: string}) {
         .then((d) => setPosts(d.items || []))
         .catch(() => setPosts([]));
     }, []);
+
+    React.useEffect(() => {
+        if (initial?.postSlug) {
+            setEmbedUrl(`/embed/blog/${encodeURIComponent(initial.postSlug)}/`);
+            setRoute("post");
+        } else if (initial?.route === "blogs") {
+            setRoute("blogs");
+        } else if (initial?.route === "home") {
+            setRoute("home");
+        }
+    }, [initial]);
 
     // Set up blogs:
     const recent = posts[0];

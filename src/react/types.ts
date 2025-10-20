@@ -1,6 +1,12 @@
 export type AppId = string;
 export type WinId = string;
 
+export type InitialWin = {
+  appId: string;
+  init?: Partial<WindowState>;
+  payload?: unknown;
+};
+
 export type WindowState = {
     id: WinId;
     appId: AppId;
@@ -10,6 +16,7 @@ export type WindowState = {
     minimized: boolean;
     maximized: boolean;
     z: number;
+    payload?: unknown;
 };
 
 export type DesktopState = {
@@ -24,11 +31,12 @@ export type AppMeta = {
   title: string;
   size?: { w: number; h: number };
   iconUrl?: string;
-  Component: React.ComponentType<{ winId: string }>;
+  maximized: boolean;
+  Component: React.ComponentType<{ winId: string, initial?: unknown }>;
 };
 
 export type DesktopAction =
-    | { type: 'OPEN'; appId: AppId; init?: Partial<WindowState> }
+    | { type: 'OPEN'; appId: AppId; init?: Partial<WindowState>; payload?: unknown }
     | { type: 'FOCUS'; appId: AppId; }
     | { type: 'CLOSE'; appId: AppId; }
     | { type: 'TOGGLE_MIN'; appId: AppId }
