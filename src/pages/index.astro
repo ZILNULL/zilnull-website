@@ -5,5 +5,9 @@ import DesktopApp from '../react/DesktopApp.tsx';
 ---
 
 <BaseLayout>
-    <DesktopApp client:load pinnedApps={['blog','notes']} shortcuts={['blog','notes']} />
+    <DesktopApp 
+        client:load 
+        pinnedApps={['blog', 'gallery', 'notes']} 
+        shortcuts={['blog', 'gallery']} 
+    />
 </BaseLayout>

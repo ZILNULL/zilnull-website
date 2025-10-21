@@ -59,11 +59,17 @@
     height: 100%;
 }
 
+.taskbar__left {
+    flex-grow: 1;
+}
+
 .taskbar__apps {
     display: flex;
     align-items: center;
     gap: 6px;
     min-width: 0;
+    flex-grow: 1;
+    overflow-x: auto;
 }
 
 .taskbar__start {
@@ -192,14 +198,6 @@
     align-items: center;
 
     user-select: none;
-}
-
-@media (max-width: 640px) {
-    .taskbar { height: calc(var(--taskbar-size) + 6px); }
-    .taskbar__start {
-        width: calc(var(--taskbar-size) - 6px);
-        height: calc(var(--taskbar-size) - 6px);
-    }
 }
 
 /* ===== Desktop shortcuts ===== */
