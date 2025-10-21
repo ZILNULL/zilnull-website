@@ -14,6 +14,8 @@ export const GET: APIRoute = async () => {
       tags: p.data.tags,
       url: `/blog/${p.slug}/`,
       embedUrl: `/embed/blog/${p.slug}/`,
+      thumbnail: p.data.thumbnail,
+      description: p.data.description,
     }));
   return new Response(JSON.stringify({ items }), {
     headers: { "Content-Type": "application/json" },

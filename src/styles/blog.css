@@ -170,7 +170,7 @@
 
 .blog-hero {
     height: 300px;
-    width: 100%;
+    width: 400px;
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
@@ -187,6 +187,13 @@
     margin-bottom: 5px;
 }
 
+.blog-card__preview-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: inherit;
+}
+
 .blog-card__preview:hover {
     cursor: pointer;
     border: 2px solid #dd5252b2;
@@ -201,6 +208,7 @@
 .blog-card__meta {
     color: white;
     font-size: 14px;
+    text-wrap: wrap;
 }
 
 .blog-home hr,
@@ -398,7 +406,7 @@
     width: 100%;
     flex-grow: 1;
     overflow-x: auto;
-    overflow: auto;
+    overflow: hidden;
 }
 
 .blog-viewer__frame iframe {

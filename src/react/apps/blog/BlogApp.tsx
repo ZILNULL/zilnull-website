@@ -8,6 +8,8 @@ type Post = {
     embedUrl: string;
     url?: string;
     tags?: string[];
+    thumbnail?: string;
+    description?: string;
 };
 
 export default function BlogApp({winId, initial}: {winId: string, initial?:any }) {
@@ -110,10 +112,12 @@ export default function BlogApp({winId, initial}: {winId: string, initial?:any }
                                 <div className="blog-hero__card">
                                     { recent ? (
                                         <>
-                                            <div className="blog-card__preview" onClick={() => openPost(recent)}></div>
+                                            <div className="blog-card__preview" onClick={() => openPost(recent)}>
+                                                <img src={recent.thumbnail} className="blog-card__preview-img" />
+                                            </div>
                                             <div className="blog-card__title">{recent.title}</div>
                                             <div className="blog-card__meta">
-                                                {new Date(recent.date).toLocaleDateString()}
+                                                {new Date(recent.date).toLocaleDateString() + " - " + recent.description}
                                             </div>
                                         </>
                                     ) : (
@@ -128,10 +132,12 @@ export default function BlogApp({winId, initial}: {winId: string, initial?:any }
                             <div className="blog-featured">
                                 {featured.map((p) => (
                                     <div key={p.slug} className="blog-featured__card">
-                                        <div className="blog-card__preview" onClick={() => openPost(p)}></div>
+                                        <div className="blog-card__preview" onClick={() => openPost(p)}>
+                                            <img src={p.thumbnail} className="blog-card__preview-img" />
+                                        </div>
                                         <div className="blog-card__title">{p.title}</div>
                                         <div className="blog-card__meta">
-                                            {new Date(p.date).toLocaleDateString()}
+                                            {new Date(p.date).toLocaleDateString() + " - " + p.description}
                                         </div>
                                     </div>
                                 ))}
@@ -176,10 +182,12 @@ export default function BlogApp({winId, initial}: {winId: string, initial?:any }
                                 {filteredPosts.map((p) => (
                                     <div key={p.slug} className="blog-list__item">
                                         <article className="blog-featured__card">
-                                            <div className="blog-card__preview" onClick={() => openPost(p)}></div>
+                                            <div className="blog-card__preview" onClick={() => openPost(p)}>
+                                                <img src={p.thumbnail} className="blog-card__preview-img" />
+                                            </div>
                                             <div className="blog-card__title">{p.title}</div>
                                             <div className="blog-card__meta">
-                                                {new Date(p.date).toLocaleDateString()}
+                                                {new Date(p.date).toLocaleDateString() + " - " + p.description}
                                             </div>
                                         </article>
                                     </div>
