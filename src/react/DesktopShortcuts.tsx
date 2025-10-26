@@ -18,26 +18,11 @@ export default function DesktopShortcuts({ shortcuts }: { shortcuts: string[] })
   const handleDoubleClick = (appId: string) => {
     const meta = APPS[appId];
     if (!meta) return;
-
-    const { visibles, minimized } = windowsForApp(state, appId);
-
-    if (minimized.length > 0) {
-      const top = minimized[0];
-      dispatch({ type: "TOGGLE_MIN", appId: top.id }); // restore
-      dispatch({ type: "FOCUS", appId: top.id });
-      return;
-    }
-
-    if (visibles.length > 0) {
-      dispatch({ type: "FOCUS", appId: visibles[0].id });
-      return;
-    }
-
-    // none → open new
+    
     dispatch({
       type: "OPEN",
       appId,
-      init: { title: meta.title, w: meta.size?.w, h: meta.size?.h, maximized: meta.maximized },
+      init: { title: meta.title, w: meta.size?.w, h: meta.size?.h },
     });
   };
 

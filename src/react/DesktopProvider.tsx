@@ -90,7 +90,7 @@ function reducer(state: DesktopState, action: DesktopAction): DesktopState {
                 ...state,
                 windows: { ...state.windows, [action.appId]: { ...w, x: action.x, y: action.y } },
             };
-            }
+        }
         case 'RESIZE': {
             const w = state.windows[action.appId]; if (!w) return state;
 
@@ -107,6 +107,31 @@ function reducer(state: DesktopState, action: DesktopAction): DesktopState {
                     [action.appId]: { ...w, w: nextW, h: nextH, x: nextX, y: nextY },
                 },
             };
+        }
+        case 'MINIMIZE_ALL_APP': {
+            const next = { ...state.windows };
+            for (const id of state.order) {
+                const w = state.windows[id];
+                if (w.appId === action.appId && !w.minimized) {
+                    next[id] = { ...w, minimized: true };
+                }
+            }
+
+            return { ...state, windows: next };
+        }
+        case 'RESTORE_ALL_APP': {
+            const next = { ...state.windows };
+            let activeId = state.activeId;
+            let maxZ = state.order.length ? Math.max(...state.order.map(i => state.windows[i].z)) : 1000;
+            for (const id of state.order) {
+                const w = state.windows[id];
+                if (w.appId === action.appId && w.minimized) {
+                    next[id] = { ...w, minimized: false, z: ++maxZ };
+                    activeId = id;
+                }
+            }
+            
+            return { ...state, windows: next, activeId };
         }
         default:
             return state;

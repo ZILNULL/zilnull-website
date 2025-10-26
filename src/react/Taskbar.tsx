@@ -1,7 +1,9 @@
 import * as React from "react";
 import { useDesktop } from './DesktopProvider';
 import { APPS } from "./apps/registry";
+import CtxMenu, { type CtxMenuItem } from "./CtxMenu";
 
+type Ctx = { open: boolean; x: number; y: number; appId: string | null };
 function byZDesc(a: { z: number }, b: { z: number }) { return b.z - a.z; }
 
 function windowsForApp(state: any, appId: string) {
@@ -33,17 +35,22 @@ function anyVisibleForApp(state: any, appId: string) {
 
 export default function Taskbar() {
     const { state, dispatch } = useDesktop();
+    const [ctx, setCtx] = React.useState<Ctx>({ open: false, x: 0, y: 0, appId: null });
     const windowsFrontToBack = [...state.order].reverse().map(id => state.windows[id]);
     const visibleAppIds = new Set(
         windowsFrontToBack.filter(w => !w.minimized).map(w => w.appId)
     );
 
+    const openContextMenu = (e:React.MouseEvent, appId:string) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setCtx({ open:true, x:e.clientX, y:e.clientY, appId });
+    };
+
     const handleAppClick = (appId: string) => {
         const meta = APPS[appId];
         if (!meta) return;
-
         const { visibles, minimized } = windowsForApp(state, appId);
-
         if (visibles.length > 0) {
             const top = visibles[0];
             dispatch({ type: "TOGGLE_MIN", appId: top.id });
@@ -88,6 +95,11 @@ export default function Taskbar() {
                                 aria-label={meta.title}
                                 type="button"
                                 onClick={() => handleAppClick(appId)}
+                                onContextMenu={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    setCtx({ open: true, x: e.clientX, y: e.clientY, appId });
+                                }}
                             >
                                 {meta.iconUrl
                                     ? <img className="taskbar__iconimg" src={meta.iconUrl} alt="" />
@@ -102,8 +114,52 @@ export default function Taskbar() {
             <div className="taskbar__right">
                 <Clock />
             </div>
+
+            {ctx.open && ctx.appId && (
+                <TaskbarCtxMenu
+                    x={ctx.x}
+                    y={ctx.y}
+                    appId={ctx.appId}
+                    onClose={() => setCtx(c => ({...c, open:false}))}
+                />
+            )}
         </div>
     );
+}
+
+function TaskbarCtxMenu(
+    { x, y, appId, onClose } :
+    { x:number; y:number; appId:string; onClose:()=>void;}
+) {
+    const { state, dispatch } = useDesktop();
+    const meta = APPS[appId];
+    const { all, minimized, visibles } = windowsForApp(state, appId);
+
+    const items: CtxMenuItem[] = [
+        ...(meta ? [{ type:"label", label: "" } as const] : []),
+        { type:"item", label:"Open (new window)", onSelect: () => {
+            if (!meta) return;
+            dispatch({ type:"OPEN", appId, init:{ title: meta.title, w: meta.size?.w, h: meta.size?.h }});
+        }},
+        { type:"separator" },
+        { type:"label", label:"Current windows" },
+        ...(all.length === 0
+            ? [{ type:"item", label:"None", onSelect: () => {}, disabled: true } as const]
+            : all.map((w:any, i:number) => ({
+                type: "item",
+                label: `Window #${i+1} ${w.minimized ? "- Open" : "- Minimize"}`,
+                onSelect: () => {
+                    dispatch({ type:"TOGGLE_MIN", appId: w.id });
+                    dispatch({ type:"FOCUS", appId: w.id });
+                }
+                }) as CtxMenuItem)
+        ),
+        { type:"separator" },
+        { type:"item", label:"Restore all", onSelect: () => dispatch({ type:"RESTORE_ALL_APP", appId }), disabled: minimized.length===0 },
+        { type:"item", label:"Minimize all", onSelect: () => dispatch({ type:"MINIMIZE_ALL_APP", appId }), disabled: visibles.length===0 },
+    ];
+
+    return <CtxMenu x={x} y={y} items={items} onClose={onClose} title={meta?.title ?? appId} />;
 }
 
 function Clock() {

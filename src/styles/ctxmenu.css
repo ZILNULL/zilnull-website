@@ -1,0 +1,20 @@
+.ctxmenu {
+    z-index: 1000;
+    min-width: 220px;
+    background: rgba(20,20,20,0.92);
+    color: #eaf9f6;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    padding: 6px;
+}
+.ctxmenu__hd { font-weight: 600; opacity: .9; padding: 4px 6px 6px; }
+.ctxmenu__subhd { font-size: 12px; opacity: .7; padding: 4px 6px; }
+.ctxmenu__item {
+    appearance: none; width: 100%;
+    border: 0; background: transparent; color: inherit;
+    text-align: left; padding: 6px 8px; border-radius: 6px; cursor: pointer;
+}
+.ctxmenu__item:hover { background: rgba(255,255,255,0.08); }
+.ctxmenu__item:disabled { opacity: .5; cursor: default; }
+.ctxmenu__sep { height: 1px; background: rgba(255,255,255,0.12); margin: 6px 0; }

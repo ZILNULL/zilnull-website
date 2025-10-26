@@ -42,5 +42,7 @@ export type DesktopAction =
     | { type: 'TOGGLE_MIN'; appId: AppId }
     | { type: 'TOGGLE_MAX'; appId: AppId }
     | { type: 'MOVE'; appId: WinId; x: number; y: number }
-    | { type: 'RESIZE'; appId: WinId; w: number; h: number; x?: number; y?: number };
+    | { type: 'RESIZE'; appId: WinId; w: number; h: number; x?: number; y?: number }
+    | { type: 'MINIMIZE_ALL_APP'; appId: AppId }
+    | { type: 'RESTORE_ALL_APP'; appId: AppId };
 
