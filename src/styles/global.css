@@ -26,6 +26,15 @@
     --blog-brand-font: 'Helvetica';
     --blog-brand-size: 50px;
     --blog-text-font: "Helvetica";
+
+    --logs-bg: var(--blog-bg, #0f0f13);
+    --logs-text-font: var(--blog-text-font, ui-sans-serif, system-ui, Segoe UI, Roboto, Inter, Arial);
+    --logs-brand-font: var(--blog-brand-font, 'Segoe UI', Roboto, Inter, Arial);
+    --logs-button-no-select: var(--blog-button-no-select, #2ecb996b);
+    --logs-accent-teal: #2ecb9a;
+    --logs-accent-red: #d94e4e;
+    --logs-accent-yellow: #def76e;
+    --logs-sidebar-width: 260px;
 }
 
 @font-face {

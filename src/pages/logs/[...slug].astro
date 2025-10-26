@@ -1,0 +1,41 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import DesktopApp from "../../react/DesktopApp.tsx";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+    const entries = await getCollection("logs");
+    const entryPaths = entries.map(e => ({ params: { slug: e.slug } }));
+    const projectIds = Array.from(new Set(entries.map(e => e.slug.split("/")[0])));
+    const projectPaths = projectIds.map(id => ({ params: { slug: id } }));
+    return [...projectPaths, ...entryPaths];
+}
+
+const raw = Astro.params.slug;
+const slug = typeof raw === "string" ? raw : (Array.isArray(raw) ? raw.join("/") : "");
+const [project, ...rest] = slug.split("/");
+
+const partSlug = rest.length ? `${project}/${rest.join("/")}` : undefined;
+
+const initialWindows = [
+  {
+    appId: "logs",
+    payload: project
+      ? (partSlug
+          ? { route: "viewer", projectId: project, partSlug }
+          : { route: "project", projectId: project })
+      : { route: "home" },
+  },
+];
+---
+
+<BaseLayout title={`Logs`}>
+    <DesktopApp 
+        client:load 
+        pinnedApps={['blog', 'gallery', 'logs', 'notes']} 
+        shortcuts={['blog', 'gallery', 'logs']}
+        initialWindows={initialWindows} 
+    />
+</BaseLayout>

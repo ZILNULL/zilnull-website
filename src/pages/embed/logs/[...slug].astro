@@ -1,0 +1,36 @@
+---
+import { getCollection, getEntry } from "astro:content";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+    const entries = await getCollection("logs");
+    return entries.map(e => ({ params: { slug: e.slug } }));
+}
+
+const p = Astro.params.slug;
+const parts = Array.isArray(p) ? p : (p ? [p] : []);
+if (parts.length === 0) throw new Error("Missing logs slug");
+
+const contentSlug = parts.join("/");
+const entry = await getEntry("logs", contentSlug);
+if (!entry) throw new Error(`Log entry not found: ${contentSlug}`);
+
+const { Content } = await entry.render();
+const title = entry.data.title ?? entry.data.partTitle ?? contentSlug;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/style/logs.css" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <article class="article">
+      {entry.data.title && <h1>{title}</h1>}
+      <Content />
+    </article>
+  </body>
+</html>

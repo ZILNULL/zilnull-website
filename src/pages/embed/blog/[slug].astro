@@ -28,25 +28,3 @@ const { Content } = await entry.render();
     </article>
   </body>
 </html>
-
-<script type="module">
-  class XCounter extends HTMLElement {
-    connectedCallback() {
-      const start = Number(this.getAttribute('start') || 0);
-      let n = start;
-      this.attachShadow({ mode: 'open' });
-      const root = this.shadowRoot;
-      const wrap = document.createElement('div');
-      wrap.style.cssText = "display:inline-flex;gap:.4em;align-items:center;border:1px solid var(--border);border-radius:6px;padding:.25em .5em;background:var(--code-bg)";
-      const num = document.createElement('span');
-      num.textContent = String(n);
-      const btn = document.createElement('button');
-      btn.textContent = "+";
-      btn.style.cssText = "cursor:pointer;";
-      btn.addEventListener('click', () => { n += 1; num.textContent = String(n); });
-      wrap.append(num, btn);
-      root.appendChild(wrap);
-    }
-  }
-  customElements.define('x-counter', XCounter);
-</script>
