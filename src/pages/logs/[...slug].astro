@@ -13,7 +13,7 @@ export async function getStaticPaths() {
     return [...projectPaths, ...entryPaths];
 }
 
-const raw = Astro.params.slug;
+const raw: String = Astro.params.slug;
 const slug = typeof raw === "string" ? raw : (Array.isArray(raw) ? raw.join("/") : "");
 const [project, ...rest] = slug.split("/");
 
