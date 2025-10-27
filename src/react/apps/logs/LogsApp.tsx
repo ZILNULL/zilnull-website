@@ -182,7 +182,7 @@ export default function LogsApp({ winId, initial }: { winId: string, initial?: a
                     {embedUrl ? (
                         <iframe className="logs-iframe" src={embedUrl} title="Log viewer" />
                     ) : (
-                        <div className="logs-empty">Select a project or part.</div>
+                        <div className="logs-empty"></div>
                     )}
                     </div>
                 </section>

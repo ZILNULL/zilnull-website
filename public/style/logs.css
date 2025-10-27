@@ -1,12 +1,9 @@
-/* ====== Embedded blog base ====== */
-/* The iframe background should stay transparent so it blends with your OS UI. */
-
 :root {
   --bg: transparent;
   --fg: #111;
   --muted: #555;
-  --link: #0d9488;         /* teal */
-  --link-visited: #7c3aed;  /* purple */
+  --link: #0d9488;
+  --link-visited: #7c3aed;
   --border: rgba(0,0,0,0.2);
   --code-bg: rgba(0,0,0,0.05);
   --kbd-bg: #eee;
@@ -43,13 +40,15 @@ html, body {
 h1,h2,h3,h4,h5,h6 {
   margin: 0 0 .6em 0;
   line-height: 1.25;
+  text-align: center;
 }
-h1 { font-size: 1.8rem; margin-top: .2em; }
-h2 { font-size: 1.4rem; margin-top: 1.2em; padding-top: .2em; }
-h3 { font-size: 1.2rem; margin-top: 1em; }
+h1 { font-size: 1.8rem; margin-top: .2em; margin-bottom: 1.2em; }
+h2 { font-size: 1.4rem; margin-top: 1.2em; padding-top: .2em; margin-bottom: 1.2em; }
+h3 { font-size: 1.2rem; margin-top: 1em; margin-bottom: 1.2em; }
 
 p, ul, ol, pre, blockquote, figure, table {
   margin: 0 0 1em 0;
+  text-align: justify;
 }
 
 /* Links */
@@ -62,6 +61,15 @@ img, video, canvas, svg {
   max-width: 100%;
   height: auto;
   display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+figure img,
+figure video,
+figure canvas,
+figure svg {
+  max-width: min(100%, 700px);
 }
 
 /* Code */
@@ -122,11 +130,11 @@ tr:nth-child(even) td { background: rgba(0,0,0,0.02); }
 }
 
 @media (max-width: 860px) {
-    .article {
-      max-width: 90%;
-      margin: 0 auto;
-      padding: 14px;
-    }
+  .article {
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 14px;
+  }
 }
 
 /* Horizontal rule */
@@ -136,7 +144,6 @@ hr {
   margin: 1.2em 0;
 }
 
-/* Callouts (optional authoring) */
 .callout {
   border: 1px solid var(--border);
   border-left: 4px solid var(--quote-bar);
@@ -152,10 +159,16 @@ hr {
 .footnotes hr { margin-top: .4em; }
 
 /* Figures */
-figure { margin: 0 0 1em 0; }
-figcaption { color: var(--muted); font-size: .9em; margin-top: .4em; }
+figure {
+  margin: 0 0 1em 0;
+  text-align: center;
+}
+figcaption {
+  color: var(--muted);
+  font-size: .9em;
+  margin-top: .4em;
+}
 
-/* “Interactive placeholder” visual (for future widgets) */
 .widget-placeholder {
   border: 1px dashed var(--border);
   border-radius: 8px;

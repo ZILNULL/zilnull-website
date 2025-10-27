@@ -3,7 +3,7 @@ title: What's the point of video game reviews, anyway?
 date: 2025-10-21
 description: Reviews are a huge part of media consumption on the internet era, but what role do they really serve?
 tags: ["essay", "opinion"]
-thumbnail: /blogs/images/reviews_thumbnail.png
+thumbnail: https://res.cloudinary.com/zilnullenv/image/upload/v1761574568/reviews_thumbnail_s3cwcw.png
 ---
 
 During the past couple of months, there have been two video games I've been looking forward to playing for a long time. These two titles are **Hollow Knight: Silksong** and **Pokémon Legends: Z-A**. They are vastly different games in many ways: they belong to two completely different genres, they play differently, and they were developed by different people. And yet, I cannot help but draw parallels between the way these two games were received by the wider public. 

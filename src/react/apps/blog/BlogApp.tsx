@@ -67,7 +67,7 @@ export default function BlogApp({winId, initial}: {winId: string, initial?:any }
                     aria-pressed={sidebarOpen}
                     onClick={() => setSidebarOpen((v) => !v)}
                 >
-                    {sidebarOpen ? " < " : " > "}
+                    {sidebarOpen ? "☰" : "☰"}
                 </button>
             </div>
 
